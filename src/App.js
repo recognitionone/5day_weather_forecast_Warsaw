@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import './App.css';
 import { observable, action } from "mobx";
 import { observer } from "mobx-react";
+import Clicker from './Clicker';
 
 
 class AppState {
@@ -27,7 +28,11 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+            <h1> . . . </h1>
             <TimerView appState={new AppState()} />
+            <h1> . . . </h1>
+            <Clicker />
+            <h1> . . . </h1>
       </div>
     );
   }

@@ -39,6 +39,7 @@ class TemperatureApp {
 			case 'K': return this.temperatureKelvin + ' o K'
 			case 'F': return this.temperatureFahrenheit + ' o F'
 			case 'C': return this.temperatureCelsius + ' o C'
+			default: return this.temperatureCelsius + ' o C'
 		}
 	}
 
@@ -63,9 +64,12 @@ class TemperatureApp {
 const temps = observable([])
 
 
-const PreTemperature = observer(({ temperatures }) => (
+const PreTemperature = observer(
+	({ temperatures }) => (
 		<div>
-			Hello fellow human
+			<div>Hello fellow human</div>
+			<div>Please enter the city name in the search field.</div>
+			<h1> . . . </h1>
 			<TemperatureInput temperatures={temperatures}/>
 			{temperatures.map( t => <PreTemperatureView key={t.id} temperature={t}/>)}
 			<Devtools />
@@ -80,8 +84,6 @@ class TemperatureInput extends Component {
 	render() {
 		return (
 			<div>
-				Destination
-				<br />
 				<input onChange={this.onChange}
 							 value={this.input} />
 				<button onClick={this.onSubmit}> Add </button>
@@ -126,7 +128,7 @@ class PreTemperatureView extends Component {
 class Temperature extends Component {
 	render() {
 		return (
-			<PreTemperature temperatures={temps}/>
+				<PreTemperature temperatures={temps}/>
 			)
 	}
 }

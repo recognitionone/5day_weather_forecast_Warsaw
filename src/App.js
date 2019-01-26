@@ -3,7 +3,7 @@ import './App.css';
 import { observable, action } from "mobx";
 import { observer } from "mobx-react";
 // import Clicker from './Clicker';
-import Temperatures3 from './Temperatures3';
+import Temperatures4 from './Temperatures4';
 
 
 // class AppState {
@@ -33,7 +33,7 @@ class App extends Component {
             {/*<TimerView appState={new AppState()} />*/}
             
             <h1> . . . </h1>
-            <Temperatures3 />
+            <Temperatures4 />
             <h1> . . . </h1>
       </div>
     );

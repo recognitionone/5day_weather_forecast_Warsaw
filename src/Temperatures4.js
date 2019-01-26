@@ -5,15 +5,26 @@ import { observer } from 'mobx-react';
 import Devtools from 'mobx-react-devtools'
 
 
-class App {
+class TemperatureApp {
 	id = Math.random();
 	@observable unit = 'C';
 	@observable temperatureCelsius = 25;
+	@observable loading = true;
 
-	constructor(degrees, unit) {
-		this.setTemperatureAndUnit(degrees, unit)
+	constructor(location) {
+		this.location = location;
+		this.fetch()
 	}
 
+	@action
+  fetch() {
+    window.fetch(`http://api.openweathermap.org/data/2.5/weather?APPID=83c6ba4dd07d83514536821a8a51d6d5&q=${this.location}`)
+      .then(res => res.json())
+      .then(action(json => {
+        this.temperatureCelsius = json.main.temp - 273.15;
+        this.loading = false;
+      }));
+  }
 
 	@computed get temperatureKelvin() {
 		return this.temperatureCelsius * (9/5) + 32
@@ -50,19 +61,44 @@ class App {
 }
 
 const temps = observable([])
-temps.push(new App(25, 'F'))
-temps.push(new App(40, 'C'))
-temps.push(new App(20, 'K'))
-temps.push(new App(25, 'F'))
-temps.push(new App(40, 'C'))
+
 
 const PreTemperature = observer(({ temperatures }) => (
 		<div>
+			Hello fellow human
+			<TemperatureInput temperatures={temperatures}/>
 			{temperatures.map( t => <PreTemperatureView key={t.id} temperature={t}/>)}
 			<Devtools />
 		</div>
 		)
 	)
+
+@observer
+class TemperatureInput extends Component {
+	@observable input = '';
+
+	render() {
+		return (
+			<div>
+				Destination
+				<br />
+				<input onChange={this.onChange}
+							 value={this.input} />
+				<button onClick={this.onSubmit}> Add </button>
+			</div>
+			)
+	}
+
+	@action onChange = (e) => {
+		this.input = e.target.value
+	}
+
+	@action onSubmit = () => {
+		this.props.temperatures.push(new TemperatureApp(this.input))
+		this.input = ''
+	}
+
+}
 
 @observer
 class PreTemperatureView extends Component {
@@ -72,7 +108,8 @@ class PreTemperatureView extends Component {
 		return (
 			<div>
 					<div onClick={this.onTemperatureClick} >
-						{t.temperature}
+						{t.location}: 
+						{t.loading ? 'loading...' : t.temperature}
 					</div>
 			</div>
 		)

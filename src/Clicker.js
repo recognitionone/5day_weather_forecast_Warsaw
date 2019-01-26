@@ -1,36 +1,52 @@
-import { observable } from 'mobx';
+import React, { Component } from 'react';
+import { observable, action } from 'mobx';
 import { observer } from 'mobx-react';
-import { Component } from 'react';
-import React from "react";
+
+import Devtools from 'mobx-react-devtools'
+
 
 const appState = observable({
   count: 0
 })
-appState.increment = function () {
+
+appState.increment = function() {
   this.count++;
 }
-appState.decrement = function () {
+
+appState.decrement = function() {
   this.count--;
 }
 
-@observer class Clicker extends Component {
+@observer class PreClicker extends Component {
+
   render() {
     return (
       <div>
-        Counter {this.props.store.count} <br />
-        <button onClick={this.handleInc}> + </button>
-        <button onClick={this.handleDec}> - </button>
+        <Devtools />
+        <h1>Count: {appState.count}</h1>
+        <br />
+        <button onClick={this.handleInc}> more </button>
+        <button onClick={this.handleDec}> less </button>
       </div>
-    )
+      )
   }
 
-  handleInc = () => {
-    this.props.store.increment()
+  handleInc = () =>{
+    appState.increment();
   }
 
-  handleDec = () => {
-    this.props.store.decrement()
+  handleDec = () =>{
+    appState.decrement();
   }
 }
+
+class Clicker extends Component {
+  render() {
+    return (
+      <PreClicker  />
+      )
+  }
+}
+
 
 export default Clicker;

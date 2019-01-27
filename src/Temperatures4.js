@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { observable, action, computed } from 'mobx';
-import { observer } from 'mobx-react';
+import { observer, Provider } from 'mobx-react';
 
 import Devtools from 'mobx-react-devtools'
 
+//TODO: Provider not working 
+//===========================
 
 class TemperatureApp {
 	id = Math.random();
@@ -65,6 +67,7 @@ const temps = observable([])
 
 
 const PreTemperature = observer(
+	['temperatures'],
 	({ temperatures }) => (
 		<div>
 			<div>Hello fellow human</div>
@@ -128,7 +131,10 @@ class PreTemperatureView extends Component {
 class Temperature extends Component {
 	render() {
 		return (
-				<PreTemperature temperatures={temps}/>
+			<Provider temperatures={temps}>
+				<PreTemperature />
+				
+			</Provider>
 			)
 	}
 }

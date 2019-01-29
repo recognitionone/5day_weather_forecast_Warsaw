@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import { observer, Provider } from 'mobx-react';
 import { API_KEY } from './constants/WeatherApiKey'; 
 
@@ -7,8 +7,7 @@ import Devtools from 'mobx-react-devtools'
 
 class TemperatureApp {
 	id = Math.random();
-	// @observable unit = 'C';
-	// @observable temperatureCelsius;
+
 	@observable loading = true;
 	@observable temperature0;
 
@@ -25,12 +24,10 @@ class TemperatureApp {
 	@action
   fetch() {
     window.fetch(
-    	// `http://api.openweathermap.org/data/2.5/weather?APPID=${API_KEY}&q=${this.location}&unit=metrics`
     	`http://api.openweathermap.org/data/2.5/forecast?APPID=${API_KEY}&units=metric&q=${this.location}`
     	)
       .then(res => res.json())
       .then(action(json => {
-        // this.temperatureCelsius = json.list[1].main.temp;
         this.temperature0 = json.list[0].main.temp;
         this.temperature1 = json.list[1].main.temp;
         this.temperature2 = json.list[2].main.temp;
@@ -40,41 +37,6 @@ class TemperatureApp {
         this.loading = false;
       }));
   }
-
-	// @computed get temperatureKelvin() {
-	// 	return this.temperatureCelsius * (9/5) + 32
-	// }
-
-	// @computed get temperatureFahrenheit() {
-	// 	return this.temperatureCelsius + 273.15
-	// } 
-
-	// @computed get temperature() {
-		// return this.temperatureCelsius + ' o C'
-		// switch(this.unit) {
-		// 	case 'K': return this.temperatureKelvin + ' o K'
-		// 	case 'F': return this.temperatureFahrenheit + ' o F'
-		// 	case 'C': return this.temperatureCelsius + ' o C'
-		// 	default: return 
-		// }
-	// }
-
-	// @action setUnit(newUnit) {
-	// 	this.unit = newUnit;
-	// }
-
-	// @action setCelsius(degrees) {
-	// 	this.temperatureCelsius = degrees;
-	// }
-
-	// @action('update temperature and unit') setTemperatureAndUnit(degrees, unit) {
-	// 	this.setCelsius(degrees);
-	// 	this.setUnit(unit);
-	// }
-
-	// @action inc() {
-	// 	this.setCelsius(this.temperatureCelsius + 1)
-	// }
 }
 
 const temps = observable([])
@@ -141,10 +103,6 @@ class PreTemperatureView extends Component {
 			</div>
 		)
 	}
-
-	// @action onTemperatureClick = () => {
-	// 	this.props.temperature.inc()
-	// }
 }
 
 

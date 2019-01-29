@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { observable, action, computed } from 'mobx';
 import { observer, Provider } from 'mobx-react';
+import { API_KEY } from './constants/WeatherApiKey'; 
 
 import Devtools from 'mobx-react-devtools'
-
-//TODO: Provider not working 
-//===========================
 
 class TemperatureApp {
 	id = Math.random();
@@ -20,10 +18,13 @@ class TemperatureApp {
 
 	@action
   fetch() {
-    window.fetch(`http://api.openweathermap.org/data/2.5/weather?APPID=83c6ba4dd07d83514536821a8a51d6d5&q=${this.location}`)
+    window.fetch(
+    	// `http://api.openweathermap.org/data/2.5/weather?APPID=${API_KEY}&q=${this.location}&unit=metrics`
+    	`http://api.openweathermap.org/data/2.5/forecast?APPID=${API_KEY}&units=metric&q=${this.location}`
+    	)
       .then(res => res.json())
       .then(action(json => {
-        this.temperatureCelsius = json.main.temp - 273.15;
+        this.temperatureCelsius = json.list[1].main.temp;
         this.loading = false;
       }));
   }

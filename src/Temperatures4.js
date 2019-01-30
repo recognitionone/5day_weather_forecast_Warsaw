@@ -16,6 +16,8 @@ class TemperatureApp {
 	@observable temperature3;
 	@observable temperature4;
 
+	
+
 	constructor(location) {
 		this.location = location;
 		this.fetch()
@@ -113,7 +115,6 @@ class Temperature extends Component {
 		return (
 			<Provider temperatures={temps}>
 				<PreTemperature />
-				
 			</Provider>
 			)
 	}

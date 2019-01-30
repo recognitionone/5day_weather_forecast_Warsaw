@@ -24,7 +24,17 @@ class DataDisplay1 extends Component {
 
       })
       .then(data => data.json())
-      .then(jsonData => jsonData.list.slice(0,5))
+      .then(jsonData => jsonData.list.slice(0,5).map(item  => {
+        return {
+          temp: item.main.temp, 
+          temp_min: item.main.temp_min, 
+          temp_max: item.main.temp_max, 
+          pressure: item.main.pressure, 
+
+          weatherDesc: item.weather[0].main,
+          weatherIcon: item.weather[0].icon
+        }
+      }))
 
       .then(data => {
         this.setState({

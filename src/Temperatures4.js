@@ -26,7 +26,7 @@ class TemperatureApp {
 	@action
   fetch() {
     window.fetch(
-    	`http://api.openweathermap.org/data/2.5/forecast?APPID=${API_KEY}&units=metric&q=${this.location}`
+    	`http://api.openweathermap.org/data/2.5/forecast?APPID=${API_KEY}&units=metric&q=London,us`
     	)
       .then(res => res.json())
       .then(action(json => {

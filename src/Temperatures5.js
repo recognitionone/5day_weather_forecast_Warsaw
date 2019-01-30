@@ -48,12 +48,15 @@ class TemperatureApp {
             weatherDesc: item.weather[0].main,
             weatherIcon: item.weather[0].icon
           }
+          
         }))
+      .then(item => {
+        return item;
+      })
   }
 }
 
 const temps = observable([])
-
 
 const PreTemperature = observer(
   ['temperatures'],
@@ -86,6 +89,7 @@ class TemperatureInput extends Component {
 class PreTemperatureView extends Component {
 
   render() {
+    console.log(this.temp);
     const t = this.props.temperature;
     return (
       <div>Day 0: {t.temperature0[0]}</div>

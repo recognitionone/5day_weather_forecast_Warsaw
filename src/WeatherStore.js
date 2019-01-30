@@ -5,18 +5,16 @@ import { observer, Provider } from 'mobx-react';
 import { API_KEY } from './constants/WeatherApiKey'; 
 
 
-class DataDisplay1 extends Component {
-  @observable stuff = [];
+class WeatherStore extends Component {
+  @observable weathers = [];
 
   constructor(props) {
     super(props)
-    this.state = {
-      requestFailed: false,
-    }
+    this.fetchWeathers()
   }
 
   @action
-  componentDidMount() {
+  fetchWeathers() {
     fetch(
       `http://api.openweathermap.org/data/2.5/forecast?APPID=${API_KEY}&units=metric&q=London,us`
       )
@@ -28,8 +26,7 @@ class DataDisplay1 extends Component {
       })
 
       .then(data => data.json())
-      .then(jsonData => jsonData.list.slice(0,5).map(item  => {
-      
+      .then(jsonData => jsonData.list.slice(0,5).map(item  => {      
           return {
             temp: item.main.temp, 
             temp_min: item.main.temp_min, 
@@ -39,32 +36,12 @@ class DataDisplay1 extends Component {
             weatherDesc: item.weather[0].main,
             weatherIcon: item.weather[0].icon
           }
-
         }))
-
-      .then(() => {
-        
-      }
-      , () => {
-        this.setState({
-          someData: this.temp,
-          requestFailed: true
-        })
+      .then(items => {
+        this.weathers = items.map(i => {this.weathers.push(i)});
+        return items;
       })
-
-  }
-
-  
-  render() {
-    console.log(this.state.someData)
-    if (this.state.requestFailed) return <p>We failed :( ...</p>
-    return (
-      <div>        
-        <p>loading...</p>
-      </div>
-    )
   }
 }
 
-
-export default DataDisplay1;
+export default WeatherStore;

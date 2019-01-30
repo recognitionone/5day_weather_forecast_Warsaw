@@ -38,8 +38,8 @@ class TemperatureApp {
       //   this.loading = false;
       // }));
       .then(jsonData => jsonData.list.slice(0,5).map(item  => {
-      
-          return {
+
+        return {
             temp: item.main.temp, 
             temp_min: item.main.temp_min, 
             temp_max: item.main.temp_max, 
@@ -49,9 +49,6 @@ class TemperatureApp {
             weatherIcon: item.weather[0].icon
           }
         }))
-      .then(action(jsonData => {
-        this.temp.map(i => {this.temperature0.push(i)}) 
-      }))
   }
 }
 
@@ -91,7 +88,7 @@ class PreTemperatureView extends Component {
   render() {
     const t = this.props.temperature;
     return (
-      <div>Day 0: {t.temperature0}</div>
+      <div>Day 0: {t.temperature0[0]}</div>
     )
   }
 }

@@ -28,6 +28,7 @@ class WeatherStore extends Component {
       .then(data => data.json())
       .then(jsonData => jsonData.list.slice(0,5).map(item  => {      
           return {
+            id: Math.random(),
             temp: item.main.temp, 
             temp_min: item.main.temp_min, 
             temp_max: item.main.temp_max, 

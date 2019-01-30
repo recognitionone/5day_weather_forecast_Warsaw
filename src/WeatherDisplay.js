@@ -12,7 +12,7 @@ class WeatherDisplay extends Component {
 
     return (
       <div>The weather: {this.props.weathers.map(item => 
-        <div>{item.temp}</div>
+        <div key={item.id}>{item.temp}</div>
         )}
       </div>
       )

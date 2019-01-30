@@ -23,28 +23,29 @@ class DataDisplay1 extends Component {
         return response
 
       })
-      .then(d => d.json())
-      .then(d => {
+      .then(data => data.json())
+      .then(jsonData => jsonData.list.slice(0,5))
+
+      .then(data => {
         this.setState({
-          githubData: d
+          githubData: data
         })
       }, () => {
         this.setState({
           requestFailed: true
         })
       })
-      
+
   }
 
   render() {
   console.log(this.state.githubData)
-    
+
     if (this.state.requestFailed) return <p>We failed :( ...</p>
     if (!this.state.githubData) return <p>Loading...</p>
     return (
       <div>
         <p>loading...</p>
-        {<p>{this.state.githubData.city.coord.lat}</p>}
         
       </div>
     )

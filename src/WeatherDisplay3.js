@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
-import { Provider } from 'mobx-react';
-// import Today from './Today';
-
-
 
 function Square (props) {
-    return (
-      <button onClick={props.onClick}>
-        {props.boardText}
-      </button> 
-    )
+    return (<button onClick={props.onClick}> {props.boardText}</button>)
 }
 
 
@@ -28,11 +20,7 @@ class Board extends React.Component {
   }
    
   handleClick(i) {
-    console.log(i);
-    console.log(this.state.myData.slice(i, i+1));
-
     const myDataForToday = this.state.myData.slice(i, i+1);
-
     this.setState ({
       myDataForToday: myDataForToday 
     })
@@ -59,7 +47,7 @@ class Board extends React.Component {
         </div>
 
         <div>{!this.state.myDataForToday ?
-          'loading...' : 
+          'Click any day' : 
           this.state.myDataForToday.map(item => 
           
             <div key={item.id}>
@@ -68,11 +56,9 @@ class Board extends React.Component {
               <div>Temperature max: {item.temp_max}</div>
               <div>Pressure: {item.pressure}</div>
               <div>Description: {item.weatherDesc}</div>
-              <div>Icon: {item.Icon}</div>
             </div>
             )}
         </div>
-
       </div>
     )
   }
@@ -84,11 +70,7 @@ class WeatherDisplay extends Component {
   render() {
     return(
         <div>
-          
           <Board myDataToday={this.props.weathers} />
-
-
-        
         </div>
       )
   }

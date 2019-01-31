@@ -3,41 +3,44 @@ import { observable, action, decorate } from 'mobx';
 import { observer } from 'mobx-react';
 
 
+
 const today = new Date().getDay(); 
 const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const oldWeek = ["Sunnandæg",   "Mōnandæg",   "Tīwesdæg",   "Wōdnesdæg",  "Þunresdæg",  "Frīgedæg",   "Sæternesdæg", "Sunnandæg",  "Mōnandæg",   "Tīwesdæg",   "Wōdnesdæg",  "Þunresdæg",  "Frīgedæg",   "Sæternesdæg" ];
+
+const weekDays = oldWeek;
 
 
 
 const Board = observer(class Board extends React.Component {
 
-  myData = this.props.myDataToday;
-  myDataForToday = null;
+  weather = this.props.weathers;
+  weatherForThatDay = null;
 
   
   handleClick(i) {
-    this.myDataForToday = this.myData.slice(i, i+1);
+    this.weatherForThatDay = this.weather.slice(i, i+1);
   }
   
-  
-  renderSquare(i) {
-    return (<button onClick={() => this.handleClick(i)}>{week[today + i]}</button>)
-  } 
+  renderWeekButton(i) {
+    return(<button onClick={() => this.handleClick(i)}> { weekDays[today + i] } </button>)
+   } 
 
   render() {    
     return (
       <div>
-        <h2>Today might be {week[today]}</h2> 
+        <h2>Today might be {weekDays[today]}</h2> 
         <div>
-          {this.renderSquare(0)}
-          {this.renderSquare(1)}
-          {this.renderSquare(2)}
-          {this.renderSquare(3)}
-          {this.renderSquare(4)}
+          {this.renderWeekButton(0)}
+          {this.renderWeekButton(1)}
+          {this.renderWeekButton(2)}
+          {this.renderWeekButton(3)}
+          {this.renderWeekButton(4)}
         </div>
 
-        <div>{!this.myDataForToday ?
+        <div>{!this.weatherForThatDay ?
           'Click any day' : 
-          this.myDataForToday.map(item => 
+          this.weatherForThatDay.map(item => 
           
             <div key={item.id}>
               <div>Temperature: {item.temp}</div>
@@ -54,10 +57,10 @@ const Board = observer(class Board extends React.Component {
 })
 
 decorate(Board, {
-  myData: observable,
-  myDataForToday: observable,
+  weather: observable,
+  weatherForThatDay: observable,
   handleClick: action,
-  renderSquare: action
+  renderWeekButton: action
 });
 
 
@@ -65,14 +68,10 @@ class WeatherDisplay extends Component {
   render() {
     return(
         <div>
-          <Board myDataToday={this.props.weathers} />
+          <Board weathers={this.props.weathers} />
         </div>
       )
   }
 }
 
 export default WeatherDisplay;
-
-
-
-

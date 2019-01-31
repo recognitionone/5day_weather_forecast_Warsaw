@@ -25,9 +25,12 @@ class WeatherStore extends Component {
       })
 
       .then(data => data.json())
-      .then(jsonData => jsonData.list.slice(0,5).map(item  => {      
+
+      .then(
+          jsonData1 => jsonData1.list.slice(0, 5).map(item  => {      
           return {
             id: Math.random(),
+            
             temp: item.main.temp, 
             temp_min: item.main.temp_min, 
             temp_max: item.main.temp_max, 
@@ -35,15 +38,28 @@ class WeatherStore extends Component {
 
             weatherDesc: item.weather[0].main,
             weatherIcon: item.weather[0].icon
+            
           }
-        }))
+        })
+        )
       .then(items => {
         this.weathers = items.map(i => {
+
           this.weathers.push(i)
+          // this.weathers.push(Object.values(i))
           return this.weathers
         });
-        return items;
       })
+
+  
+
+
+
+
+
+
+
+
   }
 }
 

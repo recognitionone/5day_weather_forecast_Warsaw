@@ -4,9 +4,8 @@ import { observer } from 'mobx-react';
 @observer 
 class WeatherDisplay extends Component {
   render() {
-
     return (
-      <div>The weather: {this.props.weathers.map(item => 
+      <div>The weather: {this.props.weathers.slice(0,1).map(item => 
         <div key={item.id}>
           <div>Temperature: {item.temp}</div>
           <div>Temperature min: {item.temp_min}</div>
@@ -23,3 +22,4 @@ class WeatherDisplay extends Component {
 }
 
 export default WeatherDisplay;
+

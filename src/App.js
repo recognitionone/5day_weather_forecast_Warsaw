@@ -3,14 +3,14 @@ import React, { Component } from 'react';
 import './App.css';
 // import Temperatures5 from './Temperatures5';
 // import ButtonExample from './ButtonExample';
-import WeatherDisplay from './WeatherDisplay'
+import WeatherDisplay3 from './WeatherDisplay3'
 
 
 class App extends Component {
   render() {
     return (
       <div >
-        <WeatherDisplay weathers={this.props.weathers}/>
+        <WeatherDisplay3 weathers={this.props.weathers}/>
       </div>
     );
   }

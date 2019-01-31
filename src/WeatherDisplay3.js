@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { observer } from 'mobx-react';
+import { Provider } from 'mobx-react';
 // import Today from './Today';
 
 
@@ -20,23 +21,30 @@ class Board extends React.Component {
       squareNumbers: Array(5).fill(" day "),
       today: new Date().getDay(),
       week: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+      
+      myData: this.props.myDataToday,
+      myDataForToday: null,
     };
   }
    
-  handleClick() {
-    
+  handleClick(i) {
+    console.log(i);
+    console.log(this.state.myData.slice(i, i+1));
+
+    const myDataForToday = this.state.myData.slice(i, i+1);
+
+    this.setState ({
+      myDataForToday: myDataForToday 
+    })
+
   }
   
   renderSquare(i) {
     return <Square  
              boardText={this.state.week[this.state.today + i]}
-             onClick={() => this.handleClick()}
+             onClick={() => this.handleClick(i)}
              />
-  }
-  
-  renderUselessButton() {
-    return <button> Useless </button>
-  }
+  } 
 
   render() {    
     return (
@@ -50,21 +58,9 @@ class Board extends React.Component {
           {this.renderSquare(4)}
         </div>
 
-      </div>
-    )
-  }
-}
-
-
-@observer 
-class WeatherDisplay extends Component {
-
-  render() {
-    return(
-        <div>
-         
-          <Board />          
-          <div>The weather: {this.props.weathers.slice(2,3).map(item => 
+        <div>{!this.state.myDataForToday ?
+          'loading...' : 
+          this.state.myDataForToday.map(item => 
           
             <div key={item.id}>
               <div>Temperature: {item.temp}</div>
@@ -73,10 +69,25 @@ class WeatherDisplay extends Component {
               <div>Pressure: {item.pressure}</div>
               <div>Description: {item.weatherDesc}</div>
               <div>Icon: {item.Icon}</div>
-              <div>. . . . </div>
             </div>
             )}
-          </div>
+        </div>
+
+      </div>
+    )
+  }
+}
+
+
+@observer 
+class WeatherDisplay extends Component {
+  render() {
+    return(
+        <div>
+          
+          <Board myDataToday={this.props.weathers} />
+
+
         
         </div>
       )

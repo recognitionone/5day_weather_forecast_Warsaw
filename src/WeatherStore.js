@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { observable } from 'mobx';
 import { action } from 'mobx';
-import { observer, Provider } from 'mobx-react';
 import { API_KEY } from './constants/WeatherApiKey'; 
 
 
@@ -39,7 +38,10 @@ class WeatherStore extends Component {
           }
         }))
       .then(items => {
-        this.weathers = items.map(i => {this.weathers.push(i)});
+        this.weathers = items.map(i => {
+          this.weathers.push(i)
+          return this.weathers
+        });
         return items;
       })
   }

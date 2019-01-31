@@ -46,20 +46,9 @@ class WeatherStore extends Component {
         this.weathers = items.map(i => {
 
           this.weathers.push(i)
-          // this.weathers.push(Object.values(i))
           return this.weathers
         });
       })
-
-  
-
-
-
-
-
-
-
-
   }
 }
 

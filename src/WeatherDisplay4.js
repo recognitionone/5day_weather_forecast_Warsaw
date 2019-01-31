@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { observable, action } from 'mobx';
+import { observable, action, decorate } from 'mobx';
 import { observer } from 'mobx-react';
 
 
@@ -7,17 +7,18 @@ const today = new Date().getDay();
 const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 
-@observer
-class Board extends React.Component {
-  @observable myData = this.props.myDataToday;
-  @observable myDataForToday = null;
 
-  @action
+const Board = observer(class Board extends React.Component {
+
+  myData = this.props.myDataToday;
+  myDataForToday = null;
+
+  
   handleClick(i) {
     this.myDataForToday = this.myData.slice(i, i+1);
   }
   
-  @action
+  
   renderSquare(i) {
     return (<button onClick={() => this.handleClick(i)}>{week[today + i]}</button>)
   } 
@@ -50,10 +51,16 @@ class Board extends React.Component {
       </div>
     )
   }
-}
+})
+
+decorate(Board, {
+  myData: observable,
+  myDataForToday: observable,
+  handleClick: action,
+  renderSquare: action
+});
 
 
-@observer 
 class WeatherDisplay extends Component {
   render() {
     return(

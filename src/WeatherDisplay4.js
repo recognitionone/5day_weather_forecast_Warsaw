@@ -5,8 +5,8 @@ import { observer } from 'mobx-react';
 
 
 const today = new Date().getDay(); 
-const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const oldWeek = ["Sunnandæg",   "Mōnandæg",   "Tīwesdæg",   "Wōdnesdæg",  "Þunresdæg",  "Frīgedæg",   "Sæternesdæg", "Sunnandæg",  "Mōnandæg",   "Tīwesdæg",   "Wōdnesdæg",  "Þunresdæg",  "Frīgedæg",   "Sæternesdæg" ];
+const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const oldWeek = ["Sunnandæg", "Mōnandæg", "Tīwesdæg", "Wōdnesdæg", "Þunresdæg", "Frīgedæg", "Sæternesdæg"];
 
 const weekDays = oldWeek;
 
@@ -23,13 +23,13 @@ const Board = observer(class Board extends React.Component {
   }
   
   renderWeekButton(i) {
-    return(<button onClick={() => this.handleClick(i)}> { weekDays[today + i] } </button>)
+    return(<button onClick={() => this.handleClick(i)}> { weekDays[(today + i) % 7] } </button>)
    } 
 
   render() {    
     return (
       <div>
-        <h2>Today might be {weekDays[today]}</h2> 
+        <h2>Today might be {weekDays[today % 7]}</h2> 
         <div>
           {this.renderWeekButton(0)}
           {this.renderWeekButton(1)}
@@ -43,11 +43,11 @@ const Board = observer(class Board extends React.Component {
           this.weatherForThatDay.map(item => 
           
             <div key={item.id}>
-              <div>Temperature: {item.temp}</div>
-              <div>Temperature min: {item.temp_min}</div>
-              <div>Temperature max: {item.temp_max}</div>
-              <div>Pressure: {item.pressure}</div>
-              <div>Description: {item.weatherDesc}</div>
+              <div>Temperature:     {item.temp}       </div>
+              <div>Temperature min: {item.temp_min}   </div>
+              <div>Temperature max: {item.temp_max}   </div>
+              <div>Pressure:        {item.pressure}   </div>
+              <div>Description:     {item.weatherDesc}</div>
             </div>
             )}
         </div>

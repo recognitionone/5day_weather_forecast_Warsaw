@@ -4,11 +4,7 @@ import WeatherDisplay from './WeatherDisplay'
 
 class App extends Component {
   render() {
-    return (
-      <div >
-        <WeatherDisplay weathers={this.props.weathers}/>
-      </div>
-    );
+    return <WeatherDisplay weathers={this.props.weathers}/>
   }
 }
 

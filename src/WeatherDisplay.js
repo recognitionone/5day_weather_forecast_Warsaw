@@ -2,22 +2,16 @@ import React, { Component } from 'react';
 import { observable, action, decorate } from 'mobx';
 import { observer } from 'mobx-react';
 
-
-
 const today = new Date().getDay(); 
 const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 const oldWeek = ["Sunnandæg", "Mōnandæg", "Tīwesdæg", "Wōdnesdæg", "Þunresdæg", "Frīgedæg", "Sæternesdæg"];
-
 const weekDays = oldWeek;
-
-
 
 const Board = observer(class Board extends React.Component {
 
   weather = this.props.weathers;
   weatherForThatDay = null;
 
-  
   handleClick(i) {
     this.weatherForThatDay = this.weather.slice(i, i+1);
   }
@@ -29,7 +23,7 @@ const Board = observer(class Board extends React.Component {
   render() {    
     return (
       <div>
-        <h2>Today might be {weekDays[today % 7]}</h2> 
+        <h2>Today might be {weekDays[today % 7]} in Warsaw...</h2> 
         <div>
           {this.renderWeekButton(0)}
           {this.renderWeekButton(1)}

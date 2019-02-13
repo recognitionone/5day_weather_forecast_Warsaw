@@ -2,34 +2,14 @@ import React, { Component } from 'react';
 import { observable, action, decorate } from 'mobx';
 import { observer } from 'mobx-react';
 
-const today = new Date().getDay(); 
-const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-const Board = observer(class Board extends React.Component {
+const WeatherDisplay = observer(class WeatherDisplay extends React.Component {
 
   weather = this.props.weathers;
-  weatherForThatDay = null;
-
-  handleClick(i) {
-    this.weatherForThatDay = this.weather.slice(i, i+1);
-  }
-  
-  renderWeekButton(i) {
-    return(<button onClick={() => this.handleClick(i)}> { weekDays[(today + i) % 7] } </button>)
-   } 
+  weatherForThatDay = this.props.weathers;
 
   render() {    
     return (
-      <div>
-        <h2>Today might be {weekDays[today % 7]} in Warsaw...</h2> 
-        <div>
-          {this.renderWeekButton(0)}
-          {this.renderWeekButton(1)}
-          {this.renderWeekButton(2)}
-          {this.renderWeekButton(3)}
-          {this.renderWeekButton(4)}
-        </div>
-
         <div>{!this.weatherForThatDay ?
           'Click any day' : 
           this.weatherForThatDay.map(item => 
@@ -43,13 +23,12 @@ const Board = observer(class Board extends React.Component {
             </div>
             )}
         </div>
-      </div>
     )
   }
 })
 
 
-decorate(Board, {
+decorate(WeatherDisplay, {
   weather: observable,
   weather: observable,
   weatherForThatDay: observable,
@@ -58,14 +37,6 @@ decorate(Board, {
 });
 
 
-class WeatherDisplay extends Component {
-  render() {
-    return(
-        <div>
-          <Board weathers={this.props.weathers} />
-        </div>
-      )
-  }
-}
+
 
 export default WeatherDisplay;

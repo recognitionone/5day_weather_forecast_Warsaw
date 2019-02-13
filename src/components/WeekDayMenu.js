@@ -7,15 +7,24 @@ const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Frida
 
 export const WeekDayMenu = observer(class WeekDayMenu extends React.Component {
 
-  weather = this.props.weathers;
-  weatherForThatDay = null;
+  // weather = this.props.weathers;
+  // weatherForThatDay = null;
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
 
   handleClick(i) {
-    this.weatherForThatDay = this.weather.slice(i, i+1);
+    const newForecastSlice = this.props.weathers.slice(i, i+1);
+    console.log(this.props.weathers.slice(i, i+1));
+    // this.props.onChange(newForecastSlice)
+    // TODO: pass newForecastSlice to parent and use it to display forecast
+
+    // this.weatherForThatDay = this.weather.slice(i, i+1);
   }
   
   renderWeekButton(i) {
-    return <button onClick={() => this.handleClick(i)}> { weekDays[(today + i) % 7] } </button>
+    return <button onClick={this.handleClick} value={i} > { weekDays[(today + i) % 7] } </button>
    } 
 
   render() {    

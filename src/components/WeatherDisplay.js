@@ -3,9 +3,7 @@ import { observable, action, decorate } from 'mobx';
 import { observer } from 'mobx-react';
 
 const today = new Date().getDay(); 
-const week = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const oldWeek = ["Sunnandæg", "Mōnandæg", "Tīwesdæg", "Wōdnesdæg", "Þunresdæg", "Frīgedæg", "Sæternesdæg"];
-const weekDays = oldWeek;
+const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
 const Board = observer(class Board extends React.Component {
 
@@ -50,7 +48,9 @@ const Board = observer(class Board extends React.Component {
   }
 })
 
+
 decorate(Board, {
+  weather: observable,
   weather: observable,
   weatherForThatDay: observable,
   handleClick: action,

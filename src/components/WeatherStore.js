@@ -1,6 +1,6 @@
 import { Component } from 'react';
 import { observable, action, decorate } from 'mobx';
-import { API_KEY } from './constants/WeatherApiKey'; 
+import { API_KEY } from '../constants/WeatherApiKey'; 
 
 
 class WeatherStore extends Component {

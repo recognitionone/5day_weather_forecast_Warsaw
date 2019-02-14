@@ -3,40 +3,28 @@ import { observable, action, decorate } from 'mobx';
 import { observer } from 'mobx-react';
 
 
-const WeatherDisplay = observer(class WeatherDisplay extends React.Component {
+class WeatherDisplay extends React.Component {
 
-  weather = this.props.weathers;
-  weatherForThatDay = this.props.weathers;
+  render() {
+    const weatherForThatDay = this.props.weatherDisplayed;  
 
-  render() {    
     return (
-        <div>{!this.weatherForThatDay ?
-          'Click any day' : 
-          this.weatherForThatDay.map(item => 
-          
-            <div key={item.id}>
-              <div>Temperature:     {item.temp}       </div>
-              <div>Temperature min: {item.temp_min}   </div>
-              <div>Temperature max: {item.temp_max}   </div>
-              <div>Pressure:        {item.pressure}   </div>
-              <div>Description:     {item.weatherDesc}</div>
+      <div>
+        {!weatherForThatDay ?
+           "loading..." 
+          :
+            <div key={weatherForThatDay.id}>
+              <div>Temperature:     {weatherForThatDay.temp}       </div>
+              <div>Temperature min: {weatherForThatDay.temp_min}   </div>
+              <div>Temperature max: {weatherForThatDay.temp_max}   </div>
+              <div>Pressure:        {weatherForThatDay.pressure}   </div>
+              <div>Description:     {weatherForThatDay.weatherDesc}</div>
             </div>
-            )}
-        </div>
+           } 
+      </div>
     )
   }
-})
-
-
-decorate(WeatherDisplay, {
-  weather: observable,
-  weather: observable,
-  weatherForThatDay: observable,
-  handleClick: action,
-  renderWeekButton: action
-});
-
-
+}
 
 
 export default WeatherDisplay;

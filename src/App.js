@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-// import WeatherDisplay from './components/WeatherDisplay'
-// import { WeekDayMenu } from './components/WeekDayMenu'
-// import WeatherStore from './components/WeatherStore'
+import WeatherDisplay from './components/WeatherDisplay'
+import { WeekDayMenu } from './components/WeekDayMenu'
 import { observable, action, decorate } from 'mobx';
 import { API_KEY } from './constants/WeatherApiKey'; 
 
@@ -14,6 +13,7 @@ class App extends Component {
     this.chooseDay = this.chooseDay.bind(this);
     this.state = {
 			weathers: [],
+			dayClickedWeather: null
 		}; 
   }
 
@@ -28,44 +28,39 @@ class App extends Component {
         return response
       })
     .then(data => data.json())
-    .then(data => (data.list.slice(0, 5).map(item => (
-          {
-            id: Math.random(),
-            temp: item.main.temp, 
-            temp_min: item.main.temp_min, 
-            temp_max: item.main.temp_max, 
-            pressure: item.main.pressure, 
-            weatherDesc: item.weather[0].main,
-            weatherIcon: item.weather[0].icon
-          }
-      ))))
-    .then(data => data.map(item => this.state.weathers.push(item)))
+    .then( data => {
+
+    	for (var i = 0; i < 5; i++) {
+    		(data.list.slice(i, i+1).map(item => (
+    			this.state.weathers.push(
+	          {
+	            id: Math.random(),
+	            temp: item.main.temp, 
+	            temp_min: item.main.temp_min, 
+	            temp_max: item.main.temp_max, 
+	            pressure: item.main.pressure, 
+	            weatherDesc: item.weather[0].main,
+	            weatherIcon: item.weather[0].icon
+	          })
+      	)))
+    	}
+    })
   }
 
 	chooseDay(newDay) {
-		this.setState({ weathers: newDay })
+		this.setState({ dayClickedWeather: newDay });
 	} 
 
-
-
   render() {
-  	
-
-  	console.log(this.state.weathers);
     return (
     	<div>
-    	Hello
+	    	<WeekDayMenu weathers={this.state.weathers} onChange={this.chooseDay} />
+	    	<WeatherDisplay weatherDisplayed={this.state.dayClickedWeather} />
     	</div>
     	)
-
   }
 }
 
 export default App;
 
 
-// <WeatherDisplay weathers={this.state.weatherStore} />
-
-//     		<WeekDayMenu 
-//     					weathers={this.state.weatherStore} 
-//     					onChange={this.chooseDay} />

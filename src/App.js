@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import WeatherDisplay from './components/WeatherDisplay'
 import { WeekDayMenu } from './components/WeekDayMenu'
-import { observable, action, decorate } from 'mobx';
+// import { observable, action, decorate } from 'mobx';
 import { API_KEY } from './constants/WeatherApiKey'; 
 
 
@@ -29,7 +29,6 @@ class App extends Component {
       })
     .then(data => data.json())
     .then( data => {
-
     	for (var i = 0; i < 5; i++) {
     		(data.list.slice(i, i+1).map(item => (
     			this.state.weathers.push(
@@ -54,6 +53,7 @@ class App extends Component {
   render() {
     return (
     	<div>
+    		<h1>This is weather for Warsaw</h1>
 	    	<WeekDayMenu weathers={this.state.weathers} onChange={this.chooseDay} />
 	    	<WeatherDisplay weatherDisplayed={this.state.dayClickedWeather} />
     	</div>
@@ -62,5 +62,3 @@ class App extends Component {
 }
 
 export default App;
-
-

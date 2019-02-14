@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { observable, action, decorate } from 'mobx';
-import { observer } from 'mobx-react';
+// import { observable, action, decorate } from 'mobx';
+// import { observer } from 'mobx-react';
 
 const today = new Date().getDay(); 
 const weekDays = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-export const WeekDayMenu = observer(class WeekDayMenu extends React.Component {
+export class WeekDayMenu extends Component {
 
   constructor(props) {
     super(props);
@@ -33,15 +33,4 @@ export const WeekDayMenu = observer(class WeekDayMenu extends React.Component {
         </div>
     )
   }
-})
-
-
-decorate(WeekDayMenu, {
-  weather: observable,
-  weather: observable,
-  weatherForThatDay: observable,
-  handleClick: action,
-  renderWeekButton: action
-});
-
-
+}

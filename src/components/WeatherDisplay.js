@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { observable, action, decorate } from 'mobx';
-import { observer } from 'mobx-react';
+// import { observable, action, decorate } from 'mobx';
+// import { observer } from 'mobx-react';
 
 
-class WeatherDisplay extends React.Component {
+class WeatherDisplay extends Component {
 
   render() {
     const weatherForThatDay = this.props.weatherDisplayed;  

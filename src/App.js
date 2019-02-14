@@ -47,14 +47,14 @@ class App extends Component {
   }
 
 	chooseDay(newDay) {
-		this.setState({ dayClickedWeather: newDay });
+		this.setState({ dayClickedWeather: this.state.weathers[newDay] });
 	} 
 
   render() {
     return (
     	<div>
     		<h1>This is weather for Warsaw</h1>
-	    	<WeekDayMenu weathers={this.state.weathers} onChange={this.chooseDay} />
+	    	<WeekDayMenu onChange={this.chooseDay} />
 	    	<WeatherDisplay weatherDisplayed={this.state.dayClickedWeather} />
     	</div>
     	)

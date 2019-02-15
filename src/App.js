@@ -19,10 +19,12 @@ class App extends Component {
 
 
 	chooseDay(newDay) {
+
     console.log(newDay);
     this.props.WeatherStore.num = newDay;
   }
  
+
 
 
   render() {
@@ -30,10 +32,12 @@ class App extends Component {
 
     return (
     	<div>
+
         <h1>This is weather for Warsaw</h1>
     		<h1>You have {WeatherStore.weathersLength} days</h1>
 	    	<WeekDayMenu onChange={this.chooseDay} />
 	    	<WeatherDisplay weatherDisplayed={WeatherStore.weathers[WeatherStore.num]} />
+
     	</div>
     	)
     }

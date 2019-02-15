@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-// import { observable, action, decorate } from 'mobx';
-// import { observer } from 'mobx-react';
 
 
 class WeatherDisplay extends Component {

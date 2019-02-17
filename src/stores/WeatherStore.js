@@ -1,6 +1,5 @@
 import { observable, action, decorate, computed } from 'mobx';
 import { API_KEY } from '../constants/WeatherApiKey'; 
-// import { observer } from 'mobx-react';
 
 
 class WeatherStore {

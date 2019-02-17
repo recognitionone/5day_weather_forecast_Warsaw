@@ -1,20 +1,33 @@
 import { observable, action, decorate, computed } from 'mobx';
-import { API_KEY } from '../constants/WeatherApiKey'; 
+import { API_KEY } from '../constants/ApiKEY'; 
+import { URL } from '../constants/ApiURL'; 
+import { LOC } from '../constants/ApiLOCATION'; 
+import { UNIT } from '../constants/ApiUNIT'; 
+// import { WeatherFetch } from './WeatherFetch'; 
 
 
 class WeatherStore {
-	weathers = [];
+
+	weathers = {
+		id: null,
+    temp: null, 
+    tempMin: null, 
+    tempMax: null, 
+    pressure: null, 
+    // weatherDesc: null,
+    // weatherIcon: null
+	};
+
 	dayClickedWeather = null;
-	num = 0;
+	dayCLicked = 0;
 
 	constructor() {
 		this.fetchWeathers();
 	}
 
 	fetchWeathers() {
-    fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?APPID=${API_KEY}&units=metric&q=Warsaw`
-          )
+
+    fetch(`${ URL }?APPID=${ API_KEY }&units=${ UNIT }&q=${ LOC }`)
     .then(response => {
         if(!response.ok) {
           throw Error("Network request failed")
@@ -23,29 +36,27 @@ class WeatherStore {
       })
     .then(data => data.json())
     .then( data => {
-    	for (var i = 0; i < 5; i++) {
-    		(data.list.slice(i, i+1).map(item => (
-    			this.weathers.push(
-	          {
-	            id: Math.random(),
-	            temp: item.main.temp, 
-	            temp_min: item.main.temp_min, 
-	            temp_max: item.main.temp_max, 
-	            pressure: item.main.pressure, 
-	            weatherDesc: item.weather[0].main,
-	            weatherIcon: item.weather[0].icon
-	          })
+    		(data.list.slice(this.dayCLicked, this.dayCLicked + 1).map(item => (
+	          
+	            this.weathers.id = new Date(),
+	            this.weathers.temp = item.main.temp, 
+	            this.weathers.tempMin = item.main.temp_min, 
+	            this.weathers.tempMax = item.main.temp_max, 
+	            this.weathers.pressure = item.main.pressure 
+	            // this.weathers.weatherDesc: item.weather[0].main,
+	            // this.weathers.weatherIcon: item.weather[0].icon
+	          
 	      )))
-	    }
+	  })
+	  .catch (err => {
+	  	console.log('Error: ' + err);
 	  })
 	}
 
-
-
   get weathersLength() {
-  	return this.weathers.length;
+  	// return this.weathers.length;
+  	return Object.keys(this.weathers).length;
   }
-
 
 }
 
@@ -55,7 +66,7 @@ decorate(WeatherStore, {
 	fetchWeathers: action,
 	weathersLength: computed,
 	giveMeData: action,
-	num: observable
+	dayCLicked: observable
 });
 
 const store = new WeatherStore();

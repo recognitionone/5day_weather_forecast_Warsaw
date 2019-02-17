@@ -10,24 +10,27 @@ export class WeekDayMenu extends Component {
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e) {
+  handleClick = (e) => {
     const whichDay = e.target.id;
     this.props.onChange(whichDay);
   }
   
-  renderWeekButton(i) {
-      return <button onClick={this.handleClick} id={i} > { weekDays[(today + i) % 7] } </button>
-   } 
+
+  createTable() {
+    let days = []
+    for (let j = 0; j < 5; j++) {
+      days.push(<button onClick={this.handleClick} id={j} key={j}> { weekDays[(today + j) % 7] } </button>)
+    }
+    return days
+  }
 
   render() {    
     return (
-        <div>
-          {this.renderWeekButton(0)}
-          {this.renderWeekButton(1)}
-          {this.renderWeekButton(2)}
-          {this.renderWeekButton(3)}
-          {this.renderWeekButton(4)}
-        </div>
+      <div>
+        {this.createTable()}
+      </div>
     )
   }
 }
+
+

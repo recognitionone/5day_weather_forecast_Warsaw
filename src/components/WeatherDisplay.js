@@ -8,9 +8,7 @@ class WeatherDisplay extends Component {
 
     return (
       <div>
-        {!weatherForThatDay ?
-           "loading..." 
-          :
+        {!weatherForThatDay ? "loading..." :
             <div key={weatherForThatDay.id}>
               <div>Temperature:     {weatherForThatDay.temp}       </div>
               <div>Temperature min: {weatherForThatDay.temp_min}   </div>
@@ -26,3 +24,6 @@ class WeatherDisplay extends Component {
 
 
 export default WeatherDisplay;
+
+
+

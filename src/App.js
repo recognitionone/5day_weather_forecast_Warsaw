@@ -1,45 +1,34 @@
 import React, { Component } from 'react';
-import WeatherDisplay from './components/WeatherDisplay'
-import { WeekDayMenu } from './components/WeekDayMenu'
 import { inject, observer } from 'mobx-react';
+
+// import WeatherDisplay from './components/WeatherDisplay'
+import { WeekDayMenu } from './components/WeekDayMenu'
 import { LOC } from './constants/ApiLOCATION'; 
 
 
-const App = inject('weatherStore')(observer( 
-
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.chooseDay = this.chooseDay.bind(this);
-  }
 
-	chooseDay(newDay) {
-    this.props.weatherStore.dayCLicked = newDay;
-    console.log(this.props.weatherStore.weathers.id);
-    console.log(this.props.weatherStore.weathers.temp);
-    console.log(this.props.weatherStore.weathers.tempMin);
-    console.log(this.props.weatherStore.weathers.tempMax);
-    console.log(this.props.weatherStore.weathers.pressure);
-    console.log(newDay);
+	chooseDay = (newDay) => {
+    //TODO compute clicked day number in WeatherStore
+    this.props.weatherStore.fetchWeathers(newDay);
   }
-
+  
   render() {
     const {weatherStore} = this.props;
-
     return (
     	<div>
         <h1>This is weather for {LOC}</h1>
-    		<h1>You have {weatherStore.weathersLength} days</h1>
 	    	<WeekDayMenu onChange={this.chooseDay} />
-	    	<WeatherDisplay weatherDisplayed={this.props.weatherStore.weathers.temp} />
+            {/* TODO Export this data table to WeatherDisplay */}
+            <div key={weatherStore.weathers.id}>
+              <div>Temperature:     {weatherStore.weathers.temp}       </div>
+              <div>Temperature min: {weatherStore.weathers.tempMin}   </div>
+              <div>Temperature max: {weatherStore.weathers.tempMax}   </div>
+              <div>Pressure:        {weatherStore.weathers.pressure}   </div>
+            </div>
     	</div>
     	)
     }
   }
 
-))
-
-export default App;
-
-
-        // <WeatherDisplay weatherDisplayed={weatherStore.weathers[weatherStore.num]} />
+export default inject('weatherStore')(observer(App));
